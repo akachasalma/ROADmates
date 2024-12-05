@@ -1,0 +1,42 @@
+server:
+  port: 8222
+spring:
+  cloud:
+    gateway:
+      default-filters:
+      - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      globalcors:
+        cors-configurations:
+          '[/**]': # Applies to all paths
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: GET, POST, PUT, DELETE, OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+
+
+
+
+
+      routes:
+        - id: user-service
+          uri: lb:http://USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+        - id: Feedback-service
+          uri: lb:http://FEEDBACK-SERVICE
+          predicates:
+            - Path=/api/v1/feedbacks/**
+        - id: offer-service
+          uri: lb:http://OFFER-SERVICE
+          predicates:
+            - Path=/api/v1/offers/**
+        - id: demand-service
+          uri: lb:http://DEMAND-SERVICE
+          predicates:
+            - Path=/api/v1/demand/**
+

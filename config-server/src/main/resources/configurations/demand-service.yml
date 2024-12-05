@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demand
+    username: roaduser
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    kafka:
+      producer:
+        bootstrap-servers: ms_kafka:9092
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        retries: 3
+        acks: all
+        properties:
+          spring.json.type.mapping: demandConfirmation:com.demand_service.demand_service.kafka.DemandConfirmation
+
+server:
+  port: 8030
+
+application:
+  config:
+    user-url: http://localhost:8222/api/v1/users
+    offer-url: http://localhost:8222/api/v1/offers
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

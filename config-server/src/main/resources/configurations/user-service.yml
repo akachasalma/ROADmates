@@ -1,0 +1,12 @@
+server:
+  port: 8090
+spring:
+  data:
+    mongodb:
+      username: roaduser
+      password: 123456
+      host: localhost
+      port: 27017
+      database: user1
+      authentication-database: admin
+      uri: mongodb://roaduser:123456@localhost:27017/admin
